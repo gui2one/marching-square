@@ -3,7 +3,7 @@ import Alea from "seedrandom/lib/alea";
 export default class Grid extends Graphics {
   resx: number;
   resy: number;
-  cells: number[][];
+  cells: boolean[][];
   prng;
   fill_ratio: number;
   constructor(resx: number, resy: number) {
@@ -20,17 +20,17 @@ export default class Grid extends Graphics {
   initCells() {
     this.cells = [];
     for (let i = 0; i < this.resy; i++) {
-      this.cells.push(Array<number>());
+      this.cells.push(Array<boolean>());
     }
 
     for (let j = 0; j < this.resy; j++) {
       for (let i = 0; i < this.resx; i++) {
-        this.cells[j].push(0);
+        this.cells[j].push(false);
       }
     }
   }
 
-  cloneCells(): number[][] {
+  cloneCells(): boolean[][] {
     let cells_copy = [];
     for (let col of this.cells) {
       cells_copy.push([])
@@ -50,10 +50,10 @@ export default class Grid extends Graphics {
       for (let i = 0; i < this.resx; i++) {
         if (j === 0 || j === this.resy - 1 || i === 0 || i === this.resx - 1) {
 
-          this.cells[j][i] = 0;
+          this.cells[j][i] = false;
         } else {
 
-          this.cells[j][i] = this.prng();
+          this.cells[j][i] = this.prng() > this.fill_ratio;
         }
       }
     }
@@ -66,11 +66,11 @@ export default class Grid extends Graphics {
         for (let i = 0; i < this.resx; i++) {
           let count = this.getNeighbours(i, j);
 
-          if (count < 4) cells_copy[j][i] -= 0.5;
-          else if (count > 4) cells_copy[j][i] += 0.5;
+          if (count < 4) cells_copy[j][i] = false;
+          else if (count > 4) cells_copy[j][i] = true;
 
           if ((j === 0) || (j === this.resy - 1) || (i === 0) || (i === this.resx - 1)) {
-            cells_copy[j][i] = 0
+            cells_copy[j][i] = false
           }
         }
       }
@@ -91,7 +91,7 @@ export default class Grid extends Graphics {
     for (let y = 0; y < this.resy; y++) {
       for (let x = 0; x < this.resx; x++) {
         let index = y * this.resx + x;
-        let state = this.cells[y][x] > this.fill_ratio ? true : false;
+        let state = this.cells[y][x];
 
         let clr = state ? 0xffffff : 0xF00000;
         this.beginFill(clr, 1.0);
@@ -112,7 +112,7 @@ export default class Grid extends Graphics {
           // check for this cell
           if (i !== 0 || j !== 0) {
 
-            if (this.cells[y + j][x + i] > this.fill_ratio) {
+            if (this.cells[y + j][x + i]) {
 
               count++;
             }
