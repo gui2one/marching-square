@@ -1,7 +1,7 @@
 import "./styles.css";
 import * as PIXI from "pixi.js";
 import Grid from "./Grid";
-import "./FloodFill"
+import { floodFill } from "./FloodFill"; "./FloodFill"
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
 
@@ -14,15 +14,19 @@ let grid = new Grid(65, 45);
 
 grid.fillRandom("éeeeé");
 grid.smooth(10);
-grid.draw();
 
 app.stage.addChild(grid);
+
+
 
 let seed_inc = 0;
 window.addEventListener("click", function () {
   grid.fillRandom(seed_inc.toString());
-  grid.smooth(20);
+  grid.smooth(10);
+  // let flooded_cells = floodFill(grid.clone(), 8, 4, false);
+  // grid.cells = flooded_cells;
   grid.draw();
+
 
   seed_inc++;
 });

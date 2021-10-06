@@ -90,13 +90,13 @@ export default class Grid extends Graphics {
     }
     for (let y = 0; y < this.resy; y++) {
       for (let x = 0; x < this.resx; x++) {
-        let index = y * this.resx + x;
-        let state = this.cells[y][x];
 
-        let clr = state ? 0xffffff : 0xF00000;
+        ;
+
+        let clr = (this.cells[y][x]) ? 0xffffff : 0xF00000;
         this.beginFill(clr, 1.0);
 
-        this.drawRect(x * square_size, y * square_size, square_size, square_size);
+        this.drawRect(x * square_size, y * square_size, square_size * 0.9, square_size * 0.9);
         this.endFill();
       }
     }
@@ -122,5 +122,11 @@ export default class Grid extends Graphics {
       }
     }
     return count;
+  }
+
+  clone(): Grid {
+    let grid = new Grid(this.resx, this.resy);
+    grid.cells = this.cloneCells();
+    return grid;
   }
 }

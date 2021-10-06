@@ -6,16 +6,13 @@ import Grid from "./Grid";
 
 // found at : https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
 
-let x = 7,
-    y = 1,
-    newC = false;
 
 let count = 0;
 // A recursive function to replace
 // previous color 'prevC' at '(x, y)'
 // and all surrounding pixels of (x, y)
 // with new color 'newC' and
-const floodFillUtil = function (_grid: Grid, x, y, prevC, newC) {
+const floodFillUtil = function (_grid: Grid, x: number, y: number, prevC: boolean, newC: boolean) {
     count++;
     // Base cases
     if (x < 0 || x >= _grid.resx || y < 0 || y >= _grid.resy) return;
@@ -33,28 +30,31 @@ const floodFillUtil = function (_grid: Grid, x, y, prevC, newC) {
 
 // It mainly finds the previous color
 // on (x, y) and calls floodFillUtil()
-export const floodFill = function (grid: Grid, x, y, newC) {
+export const floodFill = function (grid: Grid, x: number, y: number, newC: boolean): boolean[][] {
 
-    var prevC = grid.cells[y][x];
-    if (prevC == newC) return;
+
+    let prevC = grid.cells[y][x];
+    if (prevC == newC) return grid.cells;
     floodFillUtil(grid, x, y, prevC, newC);
+
+    return grid.cells;
 }
 
 // Driver code
-let grid = new Grid(10, 5)
-grid.fillRandom()
-floodFill(grid, x, y, newC);
+// let grid = new Grid(10, 5)
+// grid.fillRandom()
+// floodFill(grid.clone(), x, y, newC);
 
-console.log("Updated _screen after " + count + " calls to floodFill:");
-let str = ""
-for (var j = 0; j < grid.resy; j++) {
-    for (var i = 0; i < grid.resx; i++) {
+// console.log("Updated _screen after " + count + " calls to floodFill:");
+// let str = ""
+// for (var j = 0; j < grid.resy; j++) {
+//     for (var i = 0; i < grid.resx; i++) {
 
-        str += ((grid.cells[j][i] ? ' ' : 0) + " ");
-    }
-    str += "\n";
-}
+//         str += ((grid.cells[j][i] ? ' ' : 0) + " ");
+//     }
+//     str += "\n";
+// }
 
-console.log(str)
+// console.log(str)
 
       // This code is contributed by rdtank.
