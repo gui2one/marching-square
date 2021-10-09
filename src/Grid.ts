@@ -6,12 +6,14 @@ export default class Grid extends Graphics {
   cells: boolean[][];
   prng;
   fill_ratio: number;
+  square_size: number;
   constructor(resx: number, resy: number) {
     super();
     this.resx = resx;
     this.resy = resy;
     this.cells = [];
     this.fill_ratio = 0.43
+    this.square_size = 10;
 
 
     this.initCells();
@@ -79,12 +81,12 @@ export default class Grid extends Graphics {
 
     }
 
-    this.draw();
+    // this.draw();
   }
 
   draw() {
     this.clear();
-    let square_size = 10
+
     for (let child of this.children) {
       child.destroy();
     }
@@ -96,7 +98,7 @@ export default class Grid extends Graphics {
         let clr = (this.cells[y][x]) ? 0xffffff : 0xF00000;
         this.beginFill(clr, 1.0);
 
-        this.drawRect(x * square_size, y * square_size, square_size * 0.9, square_size * 0.9);
+        this.drawRect(x * this.square_size, y * this.square_size, this.square_size * 0.9, this.square_size * 0.9);
         this.endFill();
       }
     }
