@@ -112,7 +112,7 @@ export class MarchingSquareLines extends Graphics {
 
         for (let line of this.lines) {
             // console.log(line);
-            this.lineStyle(1, 0x00ff00, 1.0)
+            this.lineStyle(6, 0xffffff, 0.2)
             this.moveTo(line.p1.x, line.p1.y)
             this.lineTo(line.p2.x, line.p2.y)
         }

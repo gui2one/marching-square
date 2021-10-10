@@ -95,10 +95,10 @@ export default class Grid extends Graphics {
 
         ;
 
-        let clr = (this.cells[y][x]) ? 0xffffff : 0xF00000;
+        let clr = (this.cells[y][x]) ? 0xffffff : 0x333300;
         this.beginFill(clr, 1.0);
 
-        this.drawRect(x * this.square_size, y * this.square_size, this.square_size * 0.9, this.square_size * 0.9);
+        this.drawRect(x * this.square_size, y * this.square_size, this.square_size, this.square_size);
         this.endFill();
       }
     }
