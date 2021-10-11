@@ -1,9 +1,17 @@
-import "./styles.css";
+import "./styles.scss";
 import * as PIXI from "pixi.js";
 import Grid from "./Grid";
-import { floodFill, floodFillNew } from "./FloodFill";
+import { floodFill } from "./FloodFill";
 import { marchingSquare, MarchingSquareLines } from "./MarchingSquare";
-"./FloodFill"
+import renderjson from "renderjson";
+import CaveInspector from "./CaveInspector";
+
+const json_output = document.querySelector("#json-output");
+if (!json_output) {
+  throw ("no #json-output div Found")
+}
+
+
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
 
@@ -21,6 +29,8 @@ grid.smooth(3);
 grid.alpha = 0.2
 grid.draw()
 
+let inspector = new CaveInspector(grid);
+inspector.inspect()
 let lines = marchingSquare(grid);
 let draw_lines = new MarchingSquareLines(lines);
 draw_lines.position.set(grid.square_size / 2, grid.square_size / 2)
@@ -32,6 +42,9 @@ interface floodedCell {
   y: number,
   value: any
 }
+renderjson.set_icons('+', '-');
+// json_output.removeChild(json_output.childNodes)
+json_output.appendChild(renderjson(Array.from(inspector.filled_coords)))
 
 let seed_inc = 0;
 window.addEventListener("click", function (e: MouseEvent) {
@@ -41,7 +54,7 @@ window.addEventListener("click", function (e: MouseEvent) {
   let click_x = Math.floor(e.clientX / grid.square_size)
   let click_y = Math.floor(e.clientY / grid.square_size)
 
-  let flooded_cells = floodFillNew(grid.clone(), click_x, click_y, true);
+  let flooded_cells = floodFill(grid.clone(), click_x, click_y, true);
   console.log(flooded_cells);
   // grid.cells = flooded_cells;
 

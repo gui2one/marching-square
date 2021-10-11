@@ -35,16 +35,8 @@ const floodFillUtil = function (_grid: Grid, x: number, y: number, prevC: boolea
 
 // It mainly finds the previous color
 // on (x, y) and calls floodFillUtil()
-export const floodFill = function (grid: Grid, x: number, y: number, newC: boolean): Array<any> {
 
-
-    let prevC = grid.cells[y][x];
-    if (prevC == newC) return grid.cells;
-    floodFillUtil(grid, x, y, prevC, newC);
-
-    return grid.cells;
-}
-export const floodFillNew = function (grid: Grid, x: number, y: number, newC: boolean): Set<cellI> {
+export const floodFill = function (grid: Grid, x: number, y: number, newC: boolean): Set<cellI> {
 
 
     let cell_set = new Set<cellI>();
